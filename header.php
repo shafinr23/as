@@ -48,7 +48,7 @@
                     </div>
 
                     <div id="logo">
-                        <h1><a href="index-2.html"><img src="images/logo.png" alt="Astrum" /></a></h1>
+                        <h1><a href="index-2.html"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.png" alt="Astrum" /></a></h1>
                     </div>
                 </div>
 

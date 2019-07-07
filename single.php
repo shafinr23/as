@@ -24,6 +24,7 @@ get_header();
                             <li>Blog</li>
                         </ul>
                     </nav>
+                    <div class="breadcrumbs"><?php get_breadcrumb(); ?></div>
                 </div>
 
             </div>

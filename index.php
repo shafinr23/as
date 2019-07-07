@@ -13,11 +13,12 @@ get_header();
         <div class="container">
 
             <div class="eight columns">
-                <h2>Our Blog</h2>
+                <h2><?php the_title(); ?><br></h2>
             </div>
 
             <div class="eight columns">
                 <nav id="breadcrumbs">
+                    <div class="breadcrumb"><?php get_breadcrumb(); ?></div>
                     <ul>
                         <li>You are here:</li>
                         <li><a href="#">Home</a></li>
@@ -47,9 +48,9 @@ get_header();
                                 <a href="<?php the_permalink(); ?>">
                                     <?php
                                     if(has_post_thumbnail()){
-                                        $thumbnail_url = get_the_post_thumbnail_url(null,"large");
+                                       // $thumbnail_url = get_the_post_thumbnail_url();
                                         //echo '<a href="'.$thumbnail_url.'" data-featherlight="image">';
-                                        the_post_thumbnail("thumbnail" );
+                                        the_post_thumbnail();
                                         //echo '</a>';
                                     }
                                     ?>
@@ -69,8 +70,13 @@ get_header();
                                 <h2><a href="<?php the_permalink(); ?>"><?php  the_title();?></a></h2>
                                 <ul>
                                     <li>By <a href="#" ><?php the_author_posts_link();?></a> - <?php echo get_the_date(); ?></li>
+                                    <li><a href="#"><?php echo get_the_category_list($post_id ); ?></li>
                                     <li><a href="#">2 Comments</a></li>
+
                                 </ul>
+
+
+
                             </header>
 
                             <p> <?php the_excerpt(20); ?> </p>

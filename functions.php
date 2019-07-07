@@ -52,6 +52,8 @@ function theme_scripts() {
 	//wp_enqueue_style( 'theme-bootstrapcss', get_template_directory_uri() . '/assets/css/bootstrap.min.css', '215', true );
 	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/assets/css/style.css', '21.65', true );
 	wp_enqueue_style( 'theme-gress', get_template_directory_uri() . '/assets/css/color/green.css', '2.615', true );
+	//wp_enqueue_style( 'theme-switcher', get_template_directory_uri() . '/assets/css/switcher.css', '2.6915', true );
+	wp_enqueue_style( 'theme-font', '//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 	wp_enqueue_style( 'theme-style', get_stylesheet_uri() );
 
 	//wp_enqueue_script( 'theme-bootstrapjs', get_template_directory_uri() . '/assets/js/bootstrap.min.js', array('jquery'), '1215', true );
@@ -68,6 +70,7 @@ function theme_scripts() {
 	wp_enqueue_script( 'theme-jpanelmenu', get_template_directory_uri() . '/assets/scripts/query.jpanelmenu.js', array('jquery'), '1286715', true );
 	wp_enqueue_script( 'theme-contact', get_template_directory_uri() . '/assets/scripts/jquery.contact.js', array('jquery'), '1215111', true );
 	wp_enqueue_script( 'theme-isotope', get_template_directory_uri() . '/assets/scripts/jquery.isotope.min.js', array('jquery'), '996871215', true );
+	//wp_enqueue_script( 'theme-switcher', get_template_directory_uri() . '/assets/scripts/switcher.js', array('jquery'), '99689971215', true );
 	wp_enqueue_script( 'theme-custom', get_template_directory_uri() . '/assets/scripts/custom.js', array('jquery'), '222231215', true );
 
 
@@ -91,6 +94,7 @@ function mamurjor_sidebar(){
             'name'      =>      __('sidebar', 'mamurjor' ),
             'id'        =>      __('sidebar'),
             'description'   =>  __('this is right sidebar ','mamurjor'),
+            'class'         => 'categories',
             'before_widget' =>  '<div class="widget">',
             'after_widget'  =>  '</div>',
             'before_title'  =>  '<h3 class="headline">',
@@ -110,17 +114,35 @@ function mamurjor_sidebar(){
     );
 }
 add_action("widgets_init","mamurjor_sidebar");
-//// Add filter
-//add_filter( 'nav_menu_link_attributes', 'wpse156165_menu_add_class', 10, 3 );
-//
-//function wpse156165_menu_add_class( $atts, $item ) {
-//
-//
-//        $class = 'current';
-//        $atts['id'] = $class;
-//
-//    return $atts;
-//}
-//
 
+add_filter('nav_menu_css_class' , 'special_nav_class' , 10 , 2);
 
+function special_nav_class ($classes, $item) {
+    if (in_array('current-menu-item', $classes) ){
+        $classes[] = 'current';
+    }
+    return $classes;
+}
+
+function get_breadcrumb() {
+    echo '<a href="'.home_url().'" rel="nofollow">Home</a>';
+    if (is_category() || is_single()) {
+       ?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <?php
+        the_category(' &bull; ');
+        if (is_single()) {
+            ?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+            <?php
+            the_title();
+        }
+    } elseif (is_page()) {
+        ?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <?php
+        echo the_title();
+    } elseif (is_search()) {
+        ?> <i class="fa fa-angle-right" aria-hidden="true"></i>
+        <?php
+        echo the_search_query();
+
+    }
+}
